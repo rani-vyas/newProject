@@ -5,9 +5,10 @@ export function UserPage () {
 
     return(
         <>
-        <div style={{border:'1px solid black', width:'50%'}}>
-           <button type="button" ><Link to='/signup'>SignUp</Link></button>
-           <button type="button" ><Link to='/login'>Login</Link></button>
+        <div style={{border:'1px solid black',width:'40%',padding:'30px',marginLeft:'30%',marginTop:'10%',borderRadius:'10px'}}>
+            
+           <button type="button" style={{padding:'10px',marginRight:'10px'}}><Link to='/signup'>SignUp</Link></button>
+           <button type="button" style={{padding:'10px',marginLeft:'10px'}}><Link to='/login'>Login</Link></button>
         </div>
         </>
     )

@@ -132,7 +132,7 @@ export function LoginUser () {
             {error && <p style={{color:'red'}}>{error}</p>}
             {message && <p style={{color:'green'}}>{message}</p>}
         </form>
-        
+        <p>If you didn't have any account? <Link to='/signup'>Signup</Link></p>
         </div>
         </>
     )

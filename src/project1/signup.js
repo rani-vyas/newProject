@@ -25,11 +25,7 @@ const data = JSON.stringify({
     password2:password2
 })
 
-
-
- const handleSignup = async(e) =>{    
-    e.preventDefault();
-    /*if(email.matchAll !== '/^[^\s@]+@[^\s@]+\.[^\s@]+$/'){
+ /*if(email.matchAll !== '/^[^\s@]+@[^\s@]+\.[^\s@]+$/'){
         setemailError('This Email is not valid')
     }
     
@@ -46,7 +42,15 @@ const data = JSON.stringify({
         setPassword1Error('This is required.')
         setPassword2Error('This is required.')
     }*/
+    
+/*if(Object.keys(data).length === 0){
+    handleSignup()
+}*/
+
+ const handleSignup = async(e) =>{    
+    e.preventDefault();
         try{  
+            
             const user = await axios({
                 'url': 'http://127.0.0.1:8000/register/',
                 'method': 'POST',
@@ -63,7 +67,7 @@ const data = JSON.stringify({
             setsignupmessage('User Signup Successfully.')
            }
         }catch(error){
-            debugger;
+            //debugger;
         console.log(error)
         if(error.response && error.response.data && error.response.data.username){
             setUsernameError(error.response.data.username);
