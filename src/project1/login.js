@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export function LoginUser () {
 
-    const [username,setusername] = useState('')
+    const [username,setUsername] = useState('')
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const  [error,setError] = useState('')
@@ -12,7 +12,7 @@ export function LoginUser () {
     const [emailError,setEmailError] =useState('')
     const [passwordError,setPasswordError]= useState('')
     const [message,setmessage] = useState('')
-   const [isDisable,setisDisable] = useState(true)
+   const [isFormDisable,setisFormDisable] = useState(true)
 
 
  const data = JSON.stringify({
@@ -20,42 +20,21 @@ export function LoginUser () {
     email:email,
     password:password
 })
-    const login = async() =>{
+    const login = async(e) =>{
+        e.preventDefault();
 
-        if(username === username || email === email || password === password){
-            setmessage(username + ' is successfully login!')
-            setisDisable(false)
-        }
-
-        if(!username || username !== username ){
-            setusernameError('This username does not exist!')
-        }
-
+        
+            //setisFormDisable(false)
+        
         if(!email || email !== email){
             setEmailError('Check Your email!')
         }
 
         if( password !== password){
-            setPasswordError('This Field is required!')
+            setPasswordError('Check your password')
         }
-        if(!username && !email && !password){
-            setusernameError('This Field is required')
-            setEmailError('This Field is required')
-            setPasswordError('This Field is required')
-        }
-        if(!username){
-            setusernameError('This Field is required')
-        }
-        if(!email){
-            setEmailError('This Field is required')
-        }
-        if(!password){
-            setPasswordError('This Field is required')
-        }
-        if(username === '' || email === '' || password === ''){
-            setError('fill this blank fields.')
-        }
-            try{
+
+        try{
             const logindata = await axios({
                     'url':'http://127.0.0.1:8000/login/',
                     'method' : 'POST',
@@ -73,23 +52,63 @@ export function LoginUser () {
             else{
                 console.log('no token!')
             }
+
+            if(username && email && password && password){
+                setmessage('User Successfully login.')
+             }
+
         }catch(error){
             console.error('error',error)
+            if(error.response && error.response.data && error.response.data.username){
+                    setusernameError(error.response.data.username)
+            }
+            if(error.response && error.response.data && error.response.data.email){
+                setEmailError(error.response.data.email)
+            }
+            if(error.response && error.response.data && error.response.data.password){
+                setPasswordError(error.response.data.password)
+            }
+           if( error.response.data && error.response.data.non_field_errors){
+                setError(error.response.data.non_field_errors)
+            }
         }
     }
+    const handleChangeUsername = (e) =>{
+        setUsername(e.target.value)
+         setisFormDisable(!e.target.value || !email || !password)
+         if(username !== username){
+            setisFormDisable(true)
+         }
+         
+     }
+     const handleChangeEmail = (e) =>{
+        setEmail(e.target.value)    
+        setisFormDisable(!username || !e.target.value || !password ) 
+        if(email !== '/^[^\s@]+@[^\s@]+\.[^\s@]+$/'){
+            setisFormDisable(true)
+        }
+           
+      }
+     const handleChangePassword = (e) =>{
+             setPassword( e.target.value)
+             setisFormDisable(!username || !email || !e.target.value )
+            if(password !== password){
+                setisFormDisable(true)
+            }
+         } 
 
-   
+     
     return(
         <>
         <div>
             <form>
-           
             <label>Enter Username:</label>
             <input 
             type="text" 
             placeholder="username" 
             value={username} 
-            onChange={(e) => setusername(e.target.value)} />
+            onChange={handleChangeUsername} 
+            />
             <br/>
             {usernameError && <p style={{color:'red'}}>{usernameError}</p>}
             <label>Enter Email:</label>
@@ -97,8 +116,7 @@ export function LoginUser () {
             type="email" 
             placeholder="email" 
             value={email} 
-            onError={setEmailError}
-            onChange={(e) => setEmail(e.target.value)}/>
+            onChange={handleChangeEmail}/>
             <br/>
             {emailError && <p style={{color: 'red'}}>{emailError}</p>}
             <label>Enter Password:</label>
@@ -106,16 +124,13 @@ export function LoginUser () {
             type="password" 
             placeholder="password" 
             value={password} 
-            onError={setPasswordError}
-            onChange={(e) => setPassword(e.target.value)}/>
+            onChange={handleChangePassword }/>
             <br/>
             {passwordError && <p style={{color : 'red'}}>{passwordError}</p>}
 
-            <button type="button" onClick={login}  onChange={setisDisable}>Login</button>
-          
-           {username && email && password&&
-            <p type="text" style={{color:'green'}}>{message}</p>  }
-          
+            <button type="button" onClick={login} disabled={isFormDisable} >Login</button>
+            {error && <p style={{color:'red'}}>{error}</p>}
+            {message && <p style={{color:'green'}}>{message}</p>}
         </form>
         
         </div>
