@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import './page.css'
 export function UserPage () {
 
     return(
         <>
-        <div style={{border:'1px solid black',width:'40%',padding:'30px',marginLeft:'30%',marginTop:'10%',borderRadius:'10px'}}>
-            
-           <button type="button" style={{padding:'10px',marginRight:'10px'}}><Link to='/signup'>SignUp</Link></button>
-           <button type="button" style={{padding:'10px',marginLeft:'10px'}}><Link to='/login'>Login</Link></button>
+        <div className='div-class' style={{border:'10px solid black',width:'50%',padding:'20px',marginLeft:'20%',marginTop:'10%',borderRadius:'10px', height:'300px'}}>
+            <button type="button" className="primaryButton"><Link to='/signup' style={{textDecoration:'none'}}>SignUp</Link></button>
+            <p>If you already SignUp?<Link to='/login' style={{textDecoration:'none'}}>login</Link></p>
+            <button type="button" className="primaryButton" ><Link to='/login' style={{textDecoration:'none'}}>LogIn!</Link></button>
+            <p>If you didn't have any account? <Link to='/signup' style={{textDecoration:'none'}}>Signup</Link></p>
         </div>
         </>
     )

@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Routes,Route} from "react-router-dom";
 import { UserPage } from './project1/page';
 import { SignUp } from './project1/signup';
 import { LoginUser } from './project1/login';
-
+//import { RedirectFunction } from 'react-router-dom';
 function App() {
   return (
    // <SignUp/>
@@ -15,6 +15,7 @@ function App() {
       <Routes>
         <Route path='/'>
           <Route index element={<UserPage/>}/>
+          <Route path='/page' element={<UserPage/>}/>
           <Route path='/signup' element={<SignUp/>}/>
           <Route path='/login' element={<LoginUser/>}/>
         </Route>

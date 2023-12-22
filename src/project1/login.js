@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, redirect, useNavigate } from "react-router-dom"; 
 
 export function LoginUser () {
-
+const userNavigate = useNavigate()
     const [username,setUsername] = useState('')
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
@@ -12,8 +12,8 @@ export function LoginUser () {
     const [emailError,setEmailError] =useState('')
     const [passwordError,setPasswordError]= useState('')
     const [message,setmessage] = useState('')
-   const [isFormDisable,setisFormDisable] = useState(true)
-
+    const [isFormDisable,setisFormDisable] = useState(true)
+    const [successMessage, setsuccessMessage] = useState('');
 
  const data = JSON.stringify({
     'username':username,
@@ -23,18 +23,8 @@ export function LoginUser () {
     const login = async(e) =>{
         e.preventDefault();
 
-        
-            //setisFormDisable(false)
-        
-        if(!email || email !== email){
-            setEmailError('Check Your email!')
-        }
-
-        if( password !== password){
-            setPasswordError('Check your password')
-        }
-
         try{
+            debugger;
             const logindata = await axios({
                     'url':'http://127.0.0.1:8000/login/',
                     'method' : 'POST',
@@ -48,28 +38,41 @@ export function LoginUser () {
             console.log(token)
             if(token){
                 localStorage.setItem('token',token)
+        userNavigate('/page')
+                setmessage('user Successfully login.')
             }
             else{
                 console.log('no token!')
             }
-
-            if(username && email && password && password){
+            /*if(username && email && password && password){
                 setmessage('User Successfully login.')
-             }
+             }*/
 
         }catch(error){
             console.error('error',error)
             if(error.response && error.response.data && error.response.data.username){
                     setusernameError(error.response.data.username)
             }
+            else{
+                setError('')
+            }
             if(error.response && error.response.data && error.response.data.email){
                 setEmailError(error.response.data.email)
+            }
+            else{
+                setError('')
             }
             if(error.response && error.response.data && error.response.data.password){
                 setPasswordError(error.response.data.password)
             }
+            else{
+                setError('')
+            }
            if( error.response.data && error.response.data.non_field_errors){
                 setError(error.response.data.non_field_errors)
+            }
+            else{
+                setError('')
             }
         }
     }
@@ -84,9 +87,7 @@ export function LoginUser () {
      const handleChangeEmail = (e) =>{
         setEmail(e.target.value)    
         setisFormDisable(!username || !e.target.value || !password ) 
-        if(email !== '/^[^\s@]+@[^\s@]+\.[^\s@]+$/'){
-            setisFormDisable(true)
-        }
+        
            
       }
      const handleChangePassword = (e) =>{
@@ -97,10 +98,44 @@ export function LoginUser () {
             }
          } 
 
-     
+         const handleCheckUsername = () =>{
+            if(username == ''){
+                setusernameError('must included username')
+            }
+            else{
+                setusernameError('')
+            }
+         }
+         const handleCheckemail = () =>{
+            debugger;
+            let emailRegex =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!email) {
+            setEmailError("this field may not be blank!")
+          }
+          else if(!emailRegex.test(email)){
+            setEmailError('Enter A Valid Email!')
+          }
+          else{
+            setEmailError('')
+          }
+        }
+         const handleCheckpassword = () =>{
+           
+         let passwordRegexp = /^(?=.[0-9])(?=.[a-zA-Z])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&*]{8,20}$/
+                if (passwordRegexp.test(password)) {
+                    setPasswordError('Password length sholud be minimum 8.One uppercase,One lowercase,special characters or one digit must be included.')
+                } 
+                else if(!password){
+                    setPasswordError('This field is required.')
+                }
+                else{
+                    setPasswordError('')
+                }
+            }
     return(
         <>
-        <div>
+          
+        <div style={{border:'1px solid black' ,marginTop:'5%', width:'40%'}}>
             <form>
             <label>Enter Username:</label>
             <input 
@@ -108,6 +143,7 @@ export function LoginUser () {
             placeholder="username" 
             value={username} 
             onChange={handleChangeUsername} 
+            onBlur={handleCheckUsername}
             />
             <br/>
             {usernameError && <p style={{color:'red'}}>{usernameError}</p>}
@@ -116,7 +152,9 @@ export function LoginUser () {
             type="email" 
             placeholder="email" 
             value={email} 
-            onChange={handleChangeEmail}/>
+            onChange={handleChangeEmail}
+            onBlur={handleCheckemail}
+            />
             <br/>
             {emailError && <p style={{color: 'red'}}>{emailError}</p>}
             <label>Enter Password:</label>
@@ -124,7 +162,9 @@ export function LoginUser () {
             type="password" 
             placeholder="password" 
             value={password} 
-            onChange={handleChangePassword }/>
+            onChange={handleChangePassword }
+            onBlur={handleCheckpassword}
+            />
             <br/>
             {passwordError && <p style={{color : 'red'}}>{passwordError}</p>}
 
