@@ -107,7 +107,7 @@ const userNavigate = useNavigate()
             }
          }
          const handleCheckemail = () =>{
-            debugger;
+          //  debugger;
             let emailRegex =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!email) {
             setEmailError("this field may not be blank!")
@@ -120,14 +120,14 @@ const userNavigate = useNavigate()
           }
         }
          const handleCheckpassword = () =>{
-           
-         let passwordRegexp = /^(?=.[0-9])(?=.[a-zA-Z])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&*]{8,20}$/
-                if (passwordRegexp.test(password)) {
+          debugger
+        // let passwordRegexp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
+         if(!password){
+            setPasswordError('This field is required.')
+        }
+            /*else if (!passwordRegexp.test(password)) {
                     setPasswordError('Password length sholud be minimum 8.One uppercase,One lowercase,special characters or one digit must be included.')
-                } 
-                else if(!password){
-                    setPasswordError('This field is required.')
-                }
+                } */
                 else{
                     setPasswordError('')
                 }

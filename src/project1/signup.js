@@ -48,6 +48,7 @@ const data = JSON.stringify({
            
 
         }catch(error){
+            debugger;
             //showing backend error
             console.log(error)
             if(error.response && error.response.data && error.response.data.username){
@@ -102,6 +103,7 @@ const data = JSON.stringify({
      
      // function for Validation
      const handleCheckemail = () =>{
+       debugger;
         let emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
         if(!email){
             setemailError('This is field required.')
@@ -114,19 +116,23 @@ const data = JSON.stringify({
         }
     }
      const handleCheckpassword = () =>{
-        let Regex = /^(?=.[0-9])(?=.[a-zA-Z])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&*]{8,20}$/
+        debugger
+        // /^(?=.[0-9])(?=.[a-zA-Z])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
+    let passwordRegex =    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
         if(!password1){
             setPassword1Error('This field is required')
         }
-        else if(Regex.test(password1)){
-            setPassword1Error('Password length sholud be minimum 8.One uppercase,One lowercase,special characters or one digit must be included.')
+        else if(!passwordRegex.test(password1)){
+            setPassword1Error('Password length should be minimum 8.One uppercase,One lowercase,special characters or one digit must be included.')
         }
+       
         else{
             setPassword1Error('')
         }
-       
+    // return  passwordRegex.test(password1)
         }
     const handleCheckConfirmpassword = () =>{
+        debugger;
             if( !password2){
                 setPassword2Error('This Field may not be blank')
             }
@@ -179,12 +185,12 @@ const data = JSON.stringify({
                 placeholder="enter password"
                 required
                 />
-                <br/>
-                <br/>
                 {password1Error && <p style={{ color: "red" }}>{password1Error}</p>}
+                <br/>
+                <br/>
                 <label style={{fontSize:'1rem', fontFamily:'sans-serif'}}>ConfirmPassword:<span>&#128274;</span></label>
                 <input
-                id="userpassword"
+                id="userconfirmpassword"
                 className="input-class"
                 type="password"
                 onChange={handleChangePassword2}
