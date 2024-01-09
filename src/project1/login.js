@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, redirect, useNavigate } from "react-router-dom"; 
+import { Link,  useNavigate } from "react-router-dom"; 
 
 export function LoginUser () {
+  
 const userNavigate = useNavigate()
     const [username,setUsername] = useState('')
     const [email,setEmail] = useState('')
@@ -24,7 +25,7 @@ const userNavigate = useNavigate()
         e.preventDefault();
 
         try{
-           // debugger;
+            debugger;
             const logindata = await axios({
                     'url':'http://127.0.0.1:8000/login/',
                     'method' : 'POST',
@@ -38,7 +39,7 @@ const userNavigate = useNavigate()
             console.log(token)
             if(token){
                 localStorage.setItem('token',token)
-        userNavigate('/category')
+                userNavigate('/category')
                 setmessage('user Successfully login.')
             }
             else{
@@ -123,9 +124,6 @@ const userNavigate = useNavigate()
          if(!password){
             setPasswordError('This field is required.')
         }
-            /*else if (!passwordRegexp.test(password)) {
-                    setPasswordError('Password length sholud be minimum 8.One uppercase,One lowercase,special characters or one digit must be included.')
-                } */
                 else{
                     setPasswordError('')
                 }
