@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { NavLink, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 export function Product(){
     //debugger;
@@ -33,7 +33,7 @@ export function Product(){
      if (!isInCart) {
         debugger
        setProduct([ ...Product,item]);
-       navigation(item,'/cart')
+       navigation('/cart',item)
      }
     }
     return(
@@ -49,7 +49,7 @@ export function Product(){
         <h5>{item.price}</h5>
     </div>
         <p><button onClick={()=>addtoCart(item)} style={{textDecoration:'none',borderRadius:'10px'}}>Add Cart</button></p>
-       {/* <NavLink to='/cart'>  <button onClick={()=>addtoCart(item)} style={{textDecoration:'none',borderRadius:'10px'}}>Add Cart</button></NavLink>*/}
+       
 </div>
 )}
         </>
