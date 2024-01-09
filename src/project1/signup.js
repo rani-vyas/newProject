@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export function SignUp () {
-   //debugger
+   
 const [username,setUsername] = useState('')
 const [email,setEmail] = useState('')
 const [password1,setPassword1] = useState('')
@@ -25,13 +25,41 @@ const data = JSON.stringify({
 
  const handleSignup = async() =>{
     debugger
+   /*if( username){
+        setUsernameError('This username is already exist.')
+    }
+        if( email.match  !== '/^[^\s@]+@[^\s@]+\.[^\s@]+$/' ){
+    setemailError('Enter a correct Email address!')
+        }
+       if(password1.length < 8 || password1.matchAll === '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/'){
+        setPassword1Error('password is too week and Does not match with its requirements')
+      
+       }
+       if(password1 !== password2 ){
+        setPassword2Error('The two password fields did not match.')
+        
+       }
+       if(!username  || !email || !password1 || !password2){
+        setUsernameError('This filed is required.')
+        setemailError('This filed is required.')
+        setPassword1Error('This field is required.')
+        setPassword2Error('This field is required.')
+        
+       }
+       
+       if(username && email && password1 && password2){
+        setsignupSuccess('User Signup successFully!')
+       }*/
 
-   /*if(!username && !email && !password1 && !password1 && !password2){
-
-   }*/
-    debugger;
-    //console.log("Data:",data)
+   
         try{
+           /* if ( error.response.data && error.response.data.email) {
+                setemailError(error.response.data.email);
+              }
+              if( error.response.data && error.response.data.password1){
+                setPassword1Error(error.response.data.password1)
+              }*/
+
             const user = await axios({
                 'url': 'http://127.0.0.1:8000/register/',
                 'method': 'POST',
@@ -42,44 +70,17 @@ const data = JSON.stringify({
                         'data':data
             })
             return user
-
-            
-        }catch(error){
-        if (error.response && error.response.data && error.response.data.email) {
-                setemailError(error.response.data.email);
-              }
-              if(error.response && error.response.data && error.response.data.password1){
-                setPassword1Error(error.response.data.password1)
-              }
-
-
-              if( username){
-                setUsernameError('This username is already exist.')
-            }
-                if( email.matchAll  !== '/^[^\s@]+@[^\s@]+\.[^\s@]+$/' ){
-            setemailError('Enter a correct Email address!')
-                }
-               if(password1.length < 8 || password1.matchAll === '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d!@#$%^&*()_+]{8,}$/'){
-                setPassword1Error('password is too week and Does not match with its requirements')
-              
-               }
-               if(password1 !== password2 ){
-                setPassword2Error('The two password fields did not match.')
-                
-               }
-               if(!username  || !email || !password1 || !password2){
-                setUsernameError('This filed is required.')
-                setemailError('This filed is required.')
-                setPassword1Error('This field is required.')
-                setPassword2Error('This field is required.')
-                
-               }
-               
-               if(username && email && password1 && password2){
-                setsignupSuccess('User Signup successFully!')
-               }
-        }
         
+        }catch(error){
+            //console.log(error)     
+            if(error.response){
+                setemailError(error.response.data)
+            }      
+
+            if(error.response){
+                setPassword1Error(error.response.data)
+            }  
+        }      
  }
 
     return(
