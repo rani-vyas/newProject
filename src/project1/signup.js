@@ -48,7 +48,7 @@ const data = JSON.stringify({
            
 
         }catch(error){
-            debugger;
+           // debugger;
             //showing backend error
             console.log(error)
             if(error.response && error.response.data && error.response.data.username){
@@ -103,7 +103,7 @@ const data = JSON.stringify({
      
      // function for Validation
      const handleCheckemail = () =>{
-       debugger;
+      // debugger;
         let emailRegex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
         if(!email){
             setemailError('This is field required.')
@@ -116,7 +116,7 @@ const data = JSON.stringify({
         }
     }
      const handleCheckpassword = () =>{
-        debugger
+       // debugger
         // /^(?=.[0-9])(?=.[a-zA-Z])(?=.[!@#$%^&])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
     let passwordRegex =    /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
         if(!password1){
@@ -132,7 +132,7 @@ const data = JSON.stringify({
     // return  passwordRegex.test(password1)
         }
     const handleCheckConfirmpassword = () =>{
-        debugger;
+       // debugger;
             if( !password2){
                 setPassword2Error('This Field may not be blank')
             }
