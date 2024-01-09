@@ -12,27 +12,23 @@ export function CartPage () {
     const [error,setError] = useState('')
 
    
-    /*const data = JSON.stringify({
+    const data = JSON.stringify({
        user:user,
-        //image,
-        product:product,
-        product_qty:product_qty,
-    })*/
+      //image,
+      product:product,
+      product_qty:product_qty,
+    })
+    console.log(data)
     const token = localStorage.getItem('token')
   const addCart = async() =>{
 try{
       const Product = await axios.post('http://127.0.0.1:8000/cart/',
         {
-            user:user,
-            image:image,
-            product:product,
-            product_qty:product_qty
-        },
-        {
           headers:{
           "Authorization":`token ${token}`,
           'Accept':'application/json'
         },
+        "data":data,
         })
         if(user === user.id){
           setUser(user.response && user.response.data && user.response.data.results)
