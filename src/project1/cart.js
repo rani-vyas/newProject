@@ -69,7 +69,7 @@ try{
           {item.user}
           {user && <p style={{color:'black'}}>{user}</p>}
         <h2><img src={item.image} alt="img" style={{width:'40%', marginLeft:'10px' , border:'1px solid black'}}/></h2>
-        <h4>{item.product}</h4>
+       {/* <h4>{item.product}</h4> */}
           {product && <p style={{color:'black'}}>{product}</p>}
         <h5>{item.product_qty}</h5>
        </div>
