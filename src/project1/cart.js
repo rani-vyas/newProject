@@ -14,7 +14,7 @@ export function CartPage () {
    
     const data = JSON.stringify({
        user:user,
-      //image,
+      image,
       product:product,
       product_qty:product_qty,
     })
