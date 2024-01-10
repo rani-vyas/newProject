@@ -35,7 +35,7 @@ export function Product(){
        setProduct([ ...Product,item]);
        navigation('/cart',item)
      }
-    }
+    }    
     return(
         <>
         {Product?.map((item,index)=>
@@ -49,7 +49,7 @@ export function Product(){
         <h5>{item.price}</h5>
     </div>
         <p><button onClick={()=>addtoCart(item)} style={{textDecoration:'none',borderRadius:'10px'}}>Add Cart</button></p>
-       
+        <button  style={{textDecoration:'none' ,borderRadius:'10px'}}>BuyNow</button>
 </div>
 )}
         </>
